@@ -1,9 +1,11 @@
 import { resolve } from 'node:path';
 import * as readline from 'node:readline/promises';
-import { stdin as input, stdout as output } from 'node:process';
+import { stdin as input, stdout as output, exit } from 'node:process';
 import exitHandler from './utils/exitHandler.js';
 import showDirectory from './utils/showDirectoryHandler.js';
-import { Console } from 'node:console';
+import parseInput from './utils/parseInput.js';
+import validateInput from './utils/validateInput.js';
+import { nwd } from './services/nwd.js';
 
 export class App {
   constructor(homeDir, name) {
@@ -17,8 +19,17 @@ export class App {
   }
 
   async cd(path) {
-    const newPath = resolve(this.currentPath, path);
-    this.currentPath = newPath;
+    const newPath = resolve(this.currentPath, path.join(''));
+    if (await nwd.checkPath(newPath)) {
+      this.currentPath = newPath;
+    } else {
+      throw new Error();
+    }
+  }
+
+  async ls() {
+    const folderContents = await nwd.ls(this.currentPath);
+    console.table(folderContents);
   }
 
   async run() {
@@ -29,14 +40,25 @@ export class App {
     });
 
     rl.on('line', async (line) => {
-      const instruction = line;
+      if (line === '.exit') {
+        console.log();
+        exitHandler(this.username);
+      }
 
-      try {
-        await this[instruction]();
-      } catch {
-        console.log('\nOperation failed');
-      } finally {
-        showDirectory(this.currentPath);
+      const input = parseInput(line);
+      const instruction = input.instruction;
+      const args = input.args;
+
+      if (validateInput(instruction, args)) {
+        try {
+          await this[instruction](args);
+        } catch {
+          console.log('\nOperation failed');
+        } finally {
+          showDirectory(this.currentPath);
+        }
+      } else {
+        console.log('\nInvalid input\n');
       }
     });
   }
