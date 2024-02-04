@@ -11,15 +11,11 @@ const sortDirectoriesAndFiles = (a, b) => {
 }
 
 nwd.checkPath = async (path) => {
+
   try {
-    const stats = await stat(path);
-    if (stats.isDirectory()) {
-      return true;
-    } else {
-      return false;
-    }
+    return ((await stat(path)).isDirectory()) ? true : false;
   } catch (err) {
-    if (err.code === 'ENOENT') return false;
+    return false;
   }
 };
 
