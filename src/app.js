@@ -9,6 +9,7 @@ import { nwd } from './services/nwd.js';
 import { files } from './services/files.js';
 import { osi } from './services/osi.js';
 import { hash } from './services/hash.js';
+import { cad } from './services/cad.js';
 
 export class App {
   constructor(homeDir, name) {
@@ -32,7 +33,6 @@ export class App {
 
   async ls() {
     const folderContents = await nwd.ls(this.currentPath);
-    console.log(folderContents);
     console.table(folderContents);
   }
 
@@ -84,6 +84,20 @@ export class App {
     const pathToFile = resolve(this.currentPath, path);
     await hash.hash(pathToFile);
     console.log('');
+  }
+
+  async compress(path, pathTo) {
+    const pathToFile = resolve(this.currentPath, path);
+    const pathToArchiveDir = resolve(this.currentPath, pathTo);
+    await cad.compress(pathToFile, pathToArchiveDir);
+  }
+
+  async decompress(path, pathTo) {
+    const pathToArchive = resolve(this.currentPath, path);
+    const pathToFile = resolve(this.currentPath, pathTo);
+    console.log(pathToArchive);
+    console.log(pathToFile);
+    await cad.decompress(pathToArchive, pathToFile);
   }
 
   async run() {

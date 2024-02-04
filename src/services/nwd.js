@@ -11,7 +11,6 @@ const sortDirectoriesAndFiles = (a, b) => {
 }
 
 nwd.checkPath = async (path) => {
-
   try {
     return ((await stat(path)).isDirectory()) ? true : false;
   } catch (err) {

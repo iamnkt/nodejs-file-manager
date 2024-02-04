@@ -33,6 +33,12 @@ const validateInput = (instruction, args) => {
     case 'hash':
       return (args && args.length === 1) ? true : false;
 
+    case 'compress':
+      return (args && args.length === 2) ? true : false;
+
+    case 'decompress':
+      return (args && args.length === 2) ? true : false;
+
     default: return false;
   }
 }
