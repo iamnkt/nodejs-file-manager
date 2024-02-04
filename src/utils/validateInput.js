@@ -29,6 +29,9 @@ const validateInput = (instruction, args) => {
 
     case 'os':
       return (args && args.length === 1) ? true : false;
+    
+    case 'hash':
+      return (args && args.length === 1) ? true : false;
 
     default: return false;
   }

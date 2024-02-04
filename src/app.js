@@ -8,6 +8,7 @@ import validateInput from './utils/validateInput.js';
 import { nwd } from './services/nwd.js';
 import { files } from './services/files.js';
 import { osi } from './services/osi.js';
+import { hash } from './services/hash.js';
 
 export class App {
   constructor(homeDir, name) {
@@ -77,6 +78,12 @@ export class App {
 
   os(arg) {
     osi.os(arg);
+  }
+
+  async hash(path) {
+    const pathToFile = resolve(this.currentPath, path);
+    await hash.hash(pathToFile);
+    console.log('');
   }
 
   async run() {
