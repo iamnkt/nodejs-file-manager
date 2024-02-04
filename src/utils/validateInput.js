@@ -27,6 +27,9 @@ const validateInput = (instruction, args) => {
     case 'mv':
       return (args && args.length === 2) ? true : false;
 
+    case 'os':
+      return (args && args.length === 1) ? true : false;
+
     default: return false;
   }
 }

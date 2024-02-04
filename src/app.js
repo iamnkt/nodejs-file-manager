@@ -7,6 +7,7 @@ import parseInput from './utils/parseInput.js';
 import validateInput from './utils/validateInput.js';
 import { nwd } from './services/nwd.js';
 import { files } from './services/files.js';
+import { osi } from './services/osi.js';
 
 export class App {
   constructor(homeDir, name) {
@@ -30,6 +31,7 @@ export class App {
 
   async ls() {
     const folderContents = await nwd.ls(this.currentPath);
+    console.log(folderContents);
     console.table(folderContents);
   }
 
@@ -71,6 +73,10 @@ export class App {
   async rm(path) {
     const pathToFile = resolve(this.currentPath, path);
     await files.rm(pathToFile);
+  }
+
+  os(arg) {
+    osi.os(arg);
   }
 
   async run() {
