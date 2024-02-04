@@ -95,8 +95,6 @@ export class App {
   async decompress(path, pathTo) {
     const pathToArchive = resolve(this.currentPath, path);
     const pathToFile = resolve(this.currentPath, pathTo);
-    console.log(pathToArchive);
-    console.log(pathToFile);
     await cad.decompress(pathToArchive, pathToFile);
   }
 
@@ -126,7 +124,6 @@ export class App {
             await this[instruction]();
           }
         } catch (err) {
-          console.log(err);
           console.log('\nOperation failed');
         } finally {
           showDirectory(this.currentPath);
