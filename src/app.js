@@ -84,16 +84,16 @@ export class App {
     console.log();
   }
 
-  async compress(path, pathTo) {
-    const pathToFile = resolve(this.currentPath, path);
-    const pathToArchiveDir = resolve(this.currentPath, pathTo);
-    await cad.compress(pathToFile, pathToArchiveDir);
+  async compress(pathToFile, pathToArchive) {
+    const initialPath = resolve(this.currentPath, pathToFile);
+    const finalPath = resolve(this.currentPath, pathToArchive);
+    await cad.compress(initialPath, finalPath);
   }
 
-  async decompress(path, pathTo) {
-    const pathToArchive = resolve(this.currentPath, path);
-    const pathToFile = resolve(this.currentPath, pathTo);
-    await cad.decompress(pathToArchive, pathToFile);
+  async decompress(pathToArchive, filePath) {
+    const initialPath = resolve(this.currentPath, pathToArchive);
+    const finalPath = resolve(this.currentPath, filePath);
+    await cad.decompress(initialPath, finalPath);
   }
 
   async run() {
