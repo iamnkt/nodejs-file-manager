@@ -23,7 +23,9 @@ export class App {
   }
 
   async cd(path) {
+    if (path === 'c:' || path === 'C:') path ='c:/';
     const newPath = resolve(this.currentPath, path);
+    
     if (await nwd.checkPath(newPath)) {
       this.currentPath = newPath;
     } else {
