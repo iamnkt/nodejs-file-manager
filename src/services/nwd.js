@@ -22,8 +22,8 @@ nwd.ls = async(path) => {
   const methods = ['isDirectory', 'isFile'];
 
   const folderContents = await readdir(path, { withFileTypes: true });
-
-  const sortedContents = folderContents.map((item) => {
+  
+  const sortedContents = folderContents.filter((item) => !item.isSymbolicLink()).map((item) => {
     const currentItem = { name: item.name};
 
     for (let method of methods) {
