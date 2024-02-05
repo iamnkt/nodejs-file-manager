@@ -18,7 +18,7 @@ export class App {
   }
 
   async up() {
-    const newPath = resolve(this.currentPath, '..');
+    const newPath = resolve(this.currentPath, '../');
     this.currentPath = newPath;
   }
 
@@ -98,6 +98,7 @@ export class App {
 
   async run() {
     const rl = readline.createInterface({ input, output });
+
     rl.prompt('>');
 
     rl.on('SIGINT', () => {
@@ -122,6 +123,7 @@ export class App {
             await this[instruction]();
           }
         } catch (err) {
+          console.log(err);
           console.log('\nOperation failed');
         } finally {
           showDirectory(this.currentPath);

@@ -1,9 +1,9 @@
-import process from 'node:process';
+import { stdin, exit } from 'node:process';
 
 const exitHandler = (username) => {
-  process.stdin.resume();
+  stdin.resume();
   console.log(`Thank you for using File Manager, ${username}, goodbye!`);
-  process.exit();
+  exit();
 };
 
 export default exitHandler;

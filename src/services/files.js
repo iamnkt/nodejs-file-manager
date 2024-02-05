@@ -1,6 +1,6 @@
 import { stat } from 'node:fs/promises';
 import { join, dirname, basename } from 'node:path';
-import { rm, rename, writeFile } from 'node:fs/promises';
+import { rm, rename, open } from 'node:fs/promises';
 import { pipeline } from 'node:stream/promises';
 import { createReadStream, createWriteStream } from 'node:fs';
 import { stdout } from 'node:process';
@@ -27,7 +27,7 @@ files.cat = async (path) => {
 };
 
 files.add = async (path, name) => {
-  await writeFile(join(path, name), '', { flag: 'wx'});
+  await open(join(path, name), 'ax');
 };
 
 files.rn = async (path, name) => {
