@@ -14,14 +14,14 @@ cad.compress = async (pathToFile, pathToArchiveDir) => {
 
   const fileName = basename(pathToFile);
 
-  if (await files.checkPathToFile(join(pathToArchiveDir, fileName+' archive'))) {
+  if (await files.checkPathToFile(join(pathToArchiveDir, fileName+'.br'))) {
     console.log('\nOperation failed');
     return;
   }
 
   const zip = createBrotliCompress();
   const input = createReadStream(pathToFile);
-  const output = createWriteStream(join(pathToArchiveDir, fileName+' archive'));
+  const output = createWriteStream(join(pathToArchiveDir, fileName+'.br'));
 
   await pipeline(
     input,
@@ -30,20 +30,22 @@ cad.compress = async (pathToFile, pathToArchiveDir) => {
   );
 };
 
-cad.decompress = async (pathToArchive, pathToFile) => {
+cad.decompress = async (pathToArchive, pathToFileDir) => {
   if (!(await files.checkPathToFile(pathToArchive))) {
     console.log('\nOperation failed');
     return;
   }
 
-  if (await files.checkPathToFile(pathToFile)) {
+  const filename = basename(pathToArchive, '.br');
+
+  if (await files.checkPathToFile(join(pathToFileDir, filename))) {
     console.log('\nOperation failed');
     return;
   }
 
   const unzip = createBrotliDecompress();
   const input = createReadStream(pathToArchive);
-  const output = createWriteStream(pathToFile);
+  const output = createWriteStream(join(pathToFileDir, filename));
 
   await pipeline(
     input,
