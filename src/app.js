@@ -50,8 +50,6 @@ export class App {
   async rn(path, name) {
     const pathToFile = resolve(this.currentPath, path);
 
-    console.log(pathToFile)
-
     if (await files.checkPathToFile(pathToFile)) {
       await files.rn(pathToFile, name);
     } else {
@@ -83,7 +81,7 @@ export class App {
   async hash(path) {
     const pathToFile = resolve(this.currentPath, path);
     await hash.hash(pathToFile);
-    console.log('');
+    console.log();
   }
 
   async compress(path, pathTo) {
